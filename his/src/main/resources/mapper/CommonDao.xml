@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.CommonDao">
+    <select id="deptSelectList" resultType="com.demo.vo.SelectItem" >
+        select ID as value,DeptName as text from department
+        where DelMark = 1 and DeptType = 1
+        order by DeptCategoryID asc
+    </select>
+
+    <select id="registLevelSelectList" resultType="com.demo.vo.SelectItem">
+        select ID as value,RegistName as text from registlevel
+        where DelMark = 1 order by RegistCode asc
+    </select>
+
+    <select id="feeTypeSelectList" resultType="com.demo.vo.SelectItem">
+        select ID as value,SettleName as text from settlecategory
+        where DelMark = 1 order by SettleCode asc
+    </select>
+
+    <select id="MTCSelectList" resultType="com.demo.vo.SelectItem" >
+        select ci.ID as value,ci.ConstantName as text from constanttype ct join constantitem ci on ct.ID=ci.ConstantTypeID
+        where ct.ConstantTypeName = "收费方式"
+    </select>
+
+    <select id="sexSelectList" resultType="com.demo.vo.SelectItem">
+        select ConstantCode as value,ConstantName as text  from constanttype ct join
+        constantitem ci on ci.ConstantTypeID = ct.ID where ct.ConstantTypeCode='Gender' and ci.DelMark = 1
+    </select>
+
+    <select id="getNewCaseNumber" resultType="String">
+        select max(CaseNumber) from register
+    </select>
+
+<!--    根据号别查询对应号别的费用-->
+    <select id="getFeeByRegistLevel" resultType="Double" parameterType="Integer">
+        select RegistFee from registlevel where ID = #{registLevel}
+    </select>
+
+</mapper>

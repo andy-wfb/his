@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.RegistDao">
+    <insert id="doRegist" keyProperty="id" useGeneratedKeys="true" parameterType="com.demo.domain.Register">
+        insert into register
+        (CaseNumber,RealName,Gender,VisitDate,Noon,DeptID,UserID,RegistLeID,SettleID,RegistTime,RegisterID)
+        values
+        (#{caseNumber},#{realName},#{gender},#{visitDate},#{noon},#{deptID},#{userID},#{registLeID},#{settleID},#{registTime},#{registerID})
+    </insert>
+
+    <!--    <insert id="" parameterType="">-->
+    <!--        insert into MedicalRecord() values()-->
+    <!--    </insert>-->
+
+    <select id="getMedicalInfo" parameterType="String" resultType="com.demo.domain.Register">
+        select * from register where CaseNumber=#{caseID}
+    </select>
+</mapper>

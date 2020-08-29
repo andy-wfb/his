@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.RuleDao">
+    <select id="getWorkDoctorList" resultType="com.demo.vo.SelectItem" parameterType="com.demo.vo.RegisDoctorListVO">
+        select u.ID as value,u.RealName as text from user u
+        join scheduling s on u.ID=s.UserID
+        where s.SchedDate = #{schedDate,jdbcType=DATE} and s.Noon = #{noon} and
+        s.DeptID=#{deptId} and u.RegistLeID=#{registLevel}
+    </select>
+
+    <select id="getQuotaNumber" parameterType="Integer" resultType="Integer">
+        select RegistQuota from registlevel where ID=#{registLevelId} and DelMark = 1
+    </select>
+
+<!--    join scheduling s on r.VisitDate=s.SchedDate-->
+    <select id="getUsedQuotaNumber" resultType="Integer" parameterType="com.demo.vo.UsedQuotaNumberVO">
+        select count(*) from register r
+        where r.VisitDate=#{vdate,jdbcType=DATE} and r.Noon = #{noon} and r.UserId=#{userId}
+        and r.VisitState=1
+    </select>
+
+</mapper>
